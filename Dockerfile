@@ -1,20 +1,19 @@
-# Base image olarak Node.js kullanıyoruz
-FROM node:22.6.0-slim
+FROM node:18-alpine
 
-# Çalışma dizinini ayarlıyoruz
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# package.json ve package-lock.json dosyalarını kopyalıyoruz
+# Dependencies
 COPY package*.json ./
+RUN npm ci --only=production
 
-# Bağımlılıkları yüklüyoruz
-RUN npm install
-
-# Uygulama dosyalarını kopyalıyoruz
+# Scripti ve kodları kopyala
+COPY startup.sh .
 COPY . .
 
-# Uygulamanın çalışacağı portu açıyoruz
-EXPOSE 8001
+# Scripti çalıştırılabilir yap (Çok Önemli - Windows'ta oluşturulduysa bile Linux'ta yetki verir)
+RUN chmod +x startup.sh
 
-# Uygulamayı başlatıyoruz
-CMD ["npm", "start"]
+EXPOSE 9999
+
+# Container başladığında direkt bu script çalışsın
+CMD ["./startup.sh"]
