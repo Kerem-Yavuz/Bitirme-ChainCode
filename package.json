@@ -1,16 +1,19 @@
 {
-  "name": "course-chaincode",
+  "name": "asset-chaincode",
   "version": "1.0.0",
-  "description": "Production Chaincode",
+  "description": "Production-grade Hyperledger Fabric asset chaincode",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'No test specified'"
+    "start": "fabric-chaincode-node server --chaincode-address=$CHAINCODE_SERVER_ADDRESS --chaincode-id=$CHAINCODE_ID",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "engines": {
+    "node": ">=16"
   },
   "dependencies": {
     "fabric-contract-api": "^2.5.0",
     "fabric-shim": "^2.5.0"
   },
-  "engines": {
-    "node": ">=18"
-  }
+  "author": "Kerem",
+  "license": "Apache-2.0"
 }
